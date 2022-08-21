@@ -11,6 +11,9 @@ namespace Задание_1
     }
     class Program
     {
+        /// <summary>
+        /// Основной метод с кучей ифов на каждое исключение
+        /// </summary>
         static void Example()
         {
             
