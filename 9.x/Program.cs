@@ -3,21 +3,19 @@ using System.Collections.Generic;
 
 namespace DelegatePractices
 {
-    public class Person
-    {
-        public string Name { get; set; }
-
-    }
-
+    /// <summary>
+    /// Пользовательское исключение
+    /// </summary>
     class Myexception : Exception 
     {
         public Myexception(string message) 
             :base(message)
-        {
-
-        }
+        { }
     }
 
+    /// <summary>
+    /// Класс приёма ввода с клавиатуры + проверка воода
+    /// </summary>
     class InputReader
     {
 
@@ -40,12 +38,20 @@ namespace DelegatePractices
                
     }
 
+    /// <summary>
+    /// Класс сортировки с делегатом и событием
+    /// </summary>
     class Sort
     {
-        public delegate void SortDelegate(List<Person> personList);
+        public delegate void SortDelegate(List<string> personList);
         public event SortDelegate SortEvent;
 
-        public void SortName(List<Person> personList, int sortType)
+        /// <summary>
+        /// основной метод сортировки
+        /// </summary>
+        /// <param name="personList"></param>
+        /// <param name="sortType"></param>
+        public void SortName(List<string> personList, int sortType)
         {
             switch (sortType)
             {
@@ -56,7 +62,7 @@ namespace DelegatePractices
                     }
                 case 2:
                     {
-                        personList.Reverse();
+                        personList.Sort((x, y) => y.CompareTo(x));
                         break;
                     }
             }
@@ -65,7 +71,7 @@ namespace DelegatePractices
 
         }
                 
-        protected virtual void EnteredSortType(List<Person> personList)
+        protected virtual void EnteredSortType(List<string> personList)
         {
             SortEvent?.Invoke(personList);
         }
@@ -75,38 +81,10 @@ namespace DelegatePractices
         
         static void Main(string[] args)
         {
-
-            Person person1 = new()
-            {
-                Name = "Александр"
-            };
-
-            Person person2 = new()
-            {
-                Name = "Николай"
-            };
-
-            Person person3 = new()
-            {
-                Name = "Веньямин"
-            };
-
-            Person person4 = new()
-            {
-                Name = "Феофан"
-            };
-
-            Person person5 = new()
-            {
-                Name = "Людвиг"
-            };
-
-            List<Person> PersonList = new();
-            PersonList.Add(person1);
-            PersonList.Add(person2);
-            PersonList.Add(person3);
-            PersonList.Add(person4);
-            PersonList.Add(person5);
+            
+            List<string> PersonList = new List<string>{ "Людвиг", "Феофан", "Александр",
+                "Николай", "Веньямин"};
+            
 
             InputReader inputReader = new();
             Sort sort = new();
@@ -125,10 +103,10 @@ namespace DelegatePractices
                 Console.WriteLine("Введены не цифры");
             }
 
-            static void ShowSortedPerson(List<Person> personList)
+            static void ShowSortedPerson(List<string> personList)
             {
                 foreach(var person in personList)
-                Console.WriteLine(personList);
+                Console.WriteLine(person);
             }
         }
     }
